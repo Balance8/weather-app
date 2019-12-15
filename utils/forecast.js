@@ -5,13 +5,13 @@ const forecast = (latitude, longitude, callback) => {
     latitude
   )},${encodeURIComponent(longitude)}`;
 
-  request({ url: url, json: true }, (error, response) => {
+  request({ url, json: true }, (error, { body }) => {
     if (error) {
       callback('Unable to connect to weather service!');
-    } else if (response.body.error) {
+    } else if (body.error) {
       callback('Unable to find location. Try another search');
     } else {
-      const data = response.body;
+      const data = body;
       callback(undefined, {
         summary: data.daily.data[0].summary,
         currently: `Currently it is ${data.currently.temperature} degrees out there.  There is a ${data.currently.precipProbability}% chance of rain`

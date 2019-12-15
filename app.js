@@ -6,16 +6,14 @@ const address = process.argv[2];
 if (!address) {
   console.log('Please provide a location');
 } else {
-  geocode(address, (error, data) => {
+  geocode(address, (error, { latitude, longitude, location }) => {
     if (error) return console.log('Error', error);
 
-    console.log('Data', data);
-
-    forecast(data.latitude, data.longitude, (error, forecastData) => {
+    forecast(latitude, longitude, (error, { currently }) => {
       if (error) return console.log('Error', error);
 
-      console.log(data.location);
-      console.log(forecastData.currently);
+      console.log(location);
+      console.log(currently);
     });
   });
 }
