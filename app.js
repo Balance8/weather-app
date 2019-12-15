@@ -1,23 +1,24 @@
 const request = require('request');
+const geocode = require('./utils/geocode');
 
-// const darkSky =
-//   'https://api.darksky.net/forecast/3b22ee6d97112360bbfc136bdb59240e/33.976,-118.4484';
+const darkSky =
+  'https://api.darksky.net/forecast/3b22ee6d97112360bbfc136bdb59240e/33.976,-118.4484';
 
-// request({ url: darkSky, json: true }, (error, response) => {
-//   if (error) {
-//     console.log('Unable to connect to weather service!');
-//   } else if (response.body.error) {
-//     console.log('Unable to find Location');
-//   } else {
-//     const data = response.body;
-//     console.log(
-//       data.daily.data[0].summary,
-//       `Currently it is ${data.currently.temperature} degrees out there.  There is a ${data.currently.precipProbability}% chance of rain`
-//     );
-//   }
-// });
+request({ url: darkSky, json: true }, (error, response) => {
+  if (error) {
+    console.log('Unable to connect to weather service!');
+  } else if (response.body.error) {
+    console.log('Unable to find Location');
+  } else {
+    const data = response.body;
+    console.log(
+      data.daily.data[0].summary,
+      `Currently it is ${data.currently.temperature} degrees out there.  There is a ${data.currently.precipProbability}% chance of rain`
+    );
+  }
+});
 
-//Geocoding
+// Geocoding
 // Address -> Lat/long -> Weather
 
 const mapBox =
@@ -33,4 +34,9 @@ request({ url: mapBox, json: true }, (error, response) => {
     const latitude = response.body.features[0].center[1];
     console.log(longitude, latitude);
   }
+});
+
+geocode('boston', (error, data) => {
+  console.log('Error', error);
+  console.log('Data', data);
 });
